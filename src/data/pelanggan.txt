@@ -1,0 +1,14 @@
+P01,Jonny,082100090008,24,jonny@gmail.com,lunas
+P02,Vinson,082100090008,24,vinson@gmail.com,lunas
+P03,Lennys,082100090008,24,lennys@gmail.com,lunas
+P04,Jian,083160584866,19,jian@gmail.com,meminjam
+P05,Jodie,082166666666,19,jodie@gmail.com,meminjam
+P06,Jepin,082190347293,30,jepin@gmail.com,meminjam
+P07,Karen,082130427083,35,karen@gmail.com,meminjam
+P08,Daren,082112341233,22,daren@gmail.com,meminjam
+P09,Benny,082168236948,26,benny@gmail.com,meminjam
+P010,Kelly,082110284729,28,kelly@gmail.com,meminjam
+P011,Venny,081270986778,27,venny@gmail.com,meminjam
+P012,Roger,083280936743,28,roger@gmail.com,meminjam
+P013,Garry,082190907878,28,garry@gmail.com,meminjam
+P014,Kelvin,082100092020,56,kelvin@gmail.com,lunas
