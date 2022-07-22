@@ -9,6 +9,7 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 
 public class Pelanggan {
+    // atribut
     private String kodePelanggan;
     private String namaPelanggan;
     private String noTelpPelanggan;
@@ -16,7 +17,7 @@ public class Pelanggan {
     private String emailPelanggan;
     private String statusPelanggan; //meminjam, lunas
 
-    //constructor
+    //constructors
 
     public Pelanggan() {
     }
@@ -114,16 +115,29 @@ public class Pelanggan {
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter pw = new PrintWriter(bw);
             String s = "";
+            int i = 0;
             while ((s = br.readLine()) != null) {
                 String data[] = s.split(",");
-                if (data[0].equalsIgnoreCase(kodePelanggan)) {
-                    String row =data[0] + "," + data[1] + "," + data[2] + "," + data[3] + "," + data[4] + ",";
-                    row = row + status;
-                    pw.println(row);
+                if (i == 0) {
+                    if (data[0].equalsIgnoreCase(kodePelanggan)) {
+                        String row = data[0] + "," + data[1] + "," + data[2] + "," + data[3] + "," + data[4] + ",";
+                        row = row + status;
+                        pw.print(row);
+                    } else {
+                        String row = data[0] + "," + data[1] + "," + data[2] + "," + data[3] + "," + data[4] + "," + data[5];
+                        pw.print(row);
+                    }
                 } else {
-                    String row = data[0] + "," + data[1] + "," + data[2] + "," + data[3] + "," + data[4] + "," + data[5];
-                    pw.println(row);
+                    if (data[0].equalsIgnoreCase(kodePelanggan)) {
+                        String row =  "\n" + data[0] + "," + data[1] + "," + data[2] + "," + data[3] + "," + data[4] + ",";
+                        row = row + status;
+                        pw.print(row);
+                    } else {
+                        String row =  "\n" + data[0] + "," + data[1] + "," + data[2] + "," + data[3] + "," + data[4] + "," + data[5];
+                        pw.print(row);
+                    }
                 }
+                i++;
             }
             br.close();
             pw.flush();

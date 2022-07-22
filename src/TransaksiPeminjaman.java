@@ -9,39 +9,45 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 
+// Merupakan inheritance dari Transaksi
 public class TransaksiPeminjaman extends Transaksi{
 
     private ArrayList <Mobil> mobils = new ArrayList<>();
+    private ArrayList <Motor> motors = new ArrayList<>();
     private ArrayList <Pelanggan> pelanggans = new ArrayList<>();
     
     private int deposit;
     private String lokasiPinjam;
     private String tanggalPinjam;
     private Mobil mobilPinjam;
+    private Motor motorPinjam;
     private Pelanggan pelangganPinjam;
     private String statusPinjam;
 
-
+    // constructors
     public TransaksiPeminjaman() {
     }
 
 
-    public TransaksiPeminjaman(int deposit, String lokasiPinjam, String tanggalPinjam, Mobil mobilPinjam, Pelanggan pelangganPinjam) {
-        this.deposit = deposit;
-        this.lokasiPinjam = lokasiPinjam;
-        this.tanggalPinjam = tanggalPinjam;
-        this.mobilPinjam = mobilPinjam;
-        this.pelangganPinjam = pelangganPinjam;
-    }
-
-
-    public TransaksiPeminjaman( String nomorTransaksi, String kodeMobil, String kodePelanggan, String lokasiPinjam, String tanggalPinjam, int deposit, int biaya, int lamaSewa, String statusPinjam) throws FileNotFoundException, IOException {
+    public TransaksiPeminjaman( String nomorTransaksi, String kodeTransport, String kodePelanggan, String lokasiPinjam, String tanggalPinjam, int deposit, int biaya, int lamaSewa, String statusPinjam) throws FileNotFoundException, IOException {
         this.nomorTransaksi = nomorTransaksi;
-        Mobil.updateMobil(mobils);
-        for (Mobil mobil : mobils) {
-            if (mobil.getKodeMobil().equalsIgnoreCase(kodeMobil)) {
-                this.mobilPinjam = mobil;
-                break;
+        if (kodeTransport.substring(0, 1).equalsIgnoreCase("m")) {
+            Mobil.updateMobil(mobils);
+            for (Mobil mobil : mobils) {
+                if (mobil.getKodeTransport().equalsIgnoreCase(kodeTransport)) {
+                    this.mobilPinjam = mobil;
+                    this.motorPinjam = null;
+                    break;
+                }
+            }
+        } else if (kodeTransport.substring(0, 1).equalsIgnoreCase("n")) {
+            Motor.updateMotor(motors);
+            for (Motor motor : motors) {
+                if (motor.getKodeTransport().equalsIgnoreCase(kodeTransport)) {
+                    this.motorPinjam = motor;
+                    this.mobilPinjam = null;
+                    break;
+                }
             }
         }
         Pelanggan.updatePelanggan(pelanggans);
@@ -54,14 +60,13 @@ public class TransaksiPeminjaman extends Transaksi{
         this.lokasiPinjam = lokasiPinjam;
         this.tanggalPinjam = tanggalPinjam;
         this.deposit = deposit;
-        //   INGAT TAMBAH  Pelanggan pelangganPinjam di parameter
         this.biaya = biaya;
         this.lamaSewa = lamaSewa;
         this.statusPinjam = statusPinjam;
     }
 
     
-
+    // setter getter
     public int getDeposit() {
         return this.deposit;
     }
@@ -86,7 +91,6 @@ public class TransaksiPeminjaman extends Transaksi{
         this.tanggalPinjam = tanggalPinjam;
     }
 
-
     public Mobil getMobilPinjam() {
         return this.mobilPinjam;
     }
@@ -103,7 +107,6 @@ public class TransaksiPeminjaman extends Transaksi{
         this.pelangganPinjam = pelangganPinjam;
     }
 
-
     public String getStatusPinjam() {
         return this.statusPinjam;
     }
@@ -111,6 +114,15 @@ public class TransaksiPeminjaman extends Transaksi{
     public void setStatusPinjam(String statusPinjam) {
         this.statusPinjam = statusPinjam;
     }
+
+    public Motor getMotorPinjam() {
+        return this.motorPinjam;
+    }
+
+    public void setMotorPinjam(Motor motorPinjam) {
+        this.motorPinjam = motorPinjam;
+    }
+
 
 
     @Override
@@ -129,7 +141,6 @@ public class TransaksiPeminjaman extends Transaksi{
             "}";
     }
     
-
     public static ArrayList<TransaksiPeminjaman> updatePinjam (ArrayList<TransaksiPeminjaman> pinjams) throws FileNotFoundException, IOException, ParseException {
         try (BufferedReader read = new BufferedReader(new FileReader("data/peminjaman.txt"))) {
             String s = "";
@@ -151,16 +162,29 @@ public class TransaksiPeminjaman extends Transaksi{
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter pw = new PrintWriter(bw);
             String s = "";
+            int i = 0;
             while ((s = br.readLine()) != null) {
                 String data[] = s.split(",");
-                if (data[0].equalsIgnoreCase(kodeTransaksi)) {
-                    String row =data[0] + "," + data[1] + "," + data[2] + "," + data[3] + "," + data[4] + "," + data[5] + "," + data[6] + "," + data[7] + ",";
-                    row = row + status;
-                    pw.println(row);
+                if (i == 0) {
+                    if (data[0].equalsIgnoreCase(kodeTransaksi)) {
+                        String row = data[0] + "," + data[1] + "," + data[2] + "," + data[3] + "," + data[4] + "," + data[5] + "," + data[6] + "," + data[7] + ",";
+                        row = row + status;
+                        pw.print(row);
+                    } else {
+                        String row = data[0] + "," + data[1] + "," + data[2] + "," + data[3] + "," + data[4] + "," + data[5] + "," + data[6] + "," + data[7] + "," + data[8] ;
+                        pw.print(row);
+                    }
                 } else {
-                    String row = data[0] + "," + data[1] + "," + data[2] + "," + data[3] + "," + data[4] + "," + data[5] + "," + data[6] + "," + data[7] + "," + data[8] ;
-                    pw.println(row);
+                    if (data[0].equalsIgnoreCase(kodeTransaksi)) {
+                        String row = "\n" +  data[0] + "," + data[1] + "," + data[2] + "," + data[3] + "," + data[4] + "," + data[5] + "," + data[6] + "," + data[7] + ",";
+                        row = row + status;
+                        pw.print(row);
+                    } else {
+                        String row =  "\n" + data[0] + "," + data[1] + "," + data[2] + "," + data[3] + "," + data[4] + "," + data[5] + "," + data[6] + "," + data[7] + "," + data[8] ;
+                        pw.print(row);
+                    }
                 }
+                i++;
             }
             br.close();
             pw.flush();
@@ -174,11 +198,16 @@ public class TransaksiPeminjaman extends Transaksi{
     public static void cetakRecieptPinjam (String kodeTransaksi, ArrayList<TransaksiPeminjaman> pinjams) throws ParseException {
         for (TransaksiPeminjaman pinjam : pinjams) {
             if (pinjam.getNomorTransaksi().equalsIgnoreCase(kodeTransaksi)) {
-                System.out.println("Kelompok 4 Car Rental");
+                System.out.println("Kelompok 4 Rental");
                 System.out.println("---------------------");
                 System.out.println("Transaksi " + kodeTransaksi);
-                System.out.println("Sewa mobil " + pinjam.getMobilPinjam().getNamaMobil() + " " + pinjam.getMobilPinjam().getPlatTransportasi());
-                System.out.println("\t\tRp" + pinjam.getMobilPinjam().getHargaSewa() + " x " + pinjam.getLamaSewa());
+                if (pinjam.getMobilPinjam() != null) {
+                    System.out.println("Sewa mobil " + pinjam.getMobilPinjam().getNamaTransport() + " " + pinjam.getMobilPinjam().getPlatTransportasi());
+                    System.out.println("\t\tRp" + pinjam.getMobilPinjam().getHargaSewa() + " x " + pinjam.getLamaSewa());
+                } else if (pinjam.getMotorPinjam() != null) {
+                    System.out.println("Sewa motor " + pinjam.getMotorPinjam().getNamaTransport() + " " + pinjam.getMotorPinjam().getPlatTransportasi());
+                    System.out.println("\t\tRp" + pinjam.getMotorPinjam().getHargaSewa() + " x " + pinjam.getLamaSewa());
+                }
                 System.out.println("Deposit");
                 System.out.println("\t\tRp" + pinjam.getDeposit());
                 System.out.println("---------------------");
@@ -201,15 +230,15 @@ public class TransaksiPeminjaman extends Transaksi{
         return pinjams.get(i);
     }
 
-    public static void displayAturanPinjam (String equals) throws FileNotFoundException, IOException{
+    public static void displayAturanPinjam (String equals1, String kode) throws FileNotFoundException, IOException{
         try (BufferedReader read = new BufferedReader(new FileReader("data/peminjaman.txt"))) {
             String s = "";
             System.out.println("|Kode Transaksi\t|Kode Mobil\t|Kode Penumpang\t|Tanggal Pinjam\t|");
             while ((s = read.readLine()) != null) {
                 // System.out.println(s);
                 String data[] = s.split(",");
-                
-                if (data[8].equalsIgnoreCase(equals)) {
+                String nm = data[1].substring(0,1);
+                if (data[8].equalsIgnoreCase(equals1) && nm.equalsIgnoreCase(kode)) {
                     for (int i = 0; i < 8; i++) {
                         if ((i == 1) || (i == 2)) {
                             System.out.print(data[i] + "\t\t|"); 

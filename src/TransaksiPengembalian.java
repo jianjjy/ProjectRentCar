@@ -5,17 +5,18 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 
+// Merupakan inheritance dari Transaksi
 public class TransaksiPengembalian extends Transaksi{
 
+    // atribut
     String nomorTransaksi;
     private int denda;
     private String lokasiKembali;
     private String tanggalKembali;
 
+    // constructor
     public TransaksiPengembalian() {
     }
-    
-
 
     public TransaksiPengembalian(String nomorTransaksi, String lokasiKembali, String tanggalKembali, int denda) {
         this.nomorTransaksi = nomorTransaksi;
@@ -31,6 +32,7 @@ public class TransaksiPengembalian extends Transaksi{
         this.tanggalKembali = tanggalKembali;
     }
 
+    // getter setter
     public int getDenda() {
         return this.denda;
     }
@@ -55,7 +57,6 @@ public class TransaksiPengembalian extends Transaksi{
         this.tanggalKembali = tanggalKembali;
     }
 
-
     public String getNomorTransaksi() {
         return this.nomorTransaksi;
     }
@@ -63,7 +64,6 @@ public class TransaksiPengembalian extends Transaksi{
     public void setNomorTransaksi(String nomorTransaksi) {
         this.nomorTransaksi = nomorTransaksi;
     }
-
 
     @Override
     public String toString() {
@@ -73,7 +73,6 @@ public class TransaksiPengembalian extends Transaksi{
             ", tanggalKembali='" + getTanggalKembali() + "'" +
             "}";
     }
-
 
     public static ArrayList<TransaksiPengembalian> updateKembali (ArrayList<TransaksiPengembalian> kembalis) throws FileNotFoundException, IOException, ParseException {
         try (BufferedReader read = new BufferedReader(new FileReader("data/pengembalian.txt"))) {
@@ -90,10 +89,15 @@ public class TransaksiPengembalian extends Transaksi{
         for (TransaksiPengembalian kembali : kembalis) {
             if (kembali.getNomorTransaksi().equalsIgnoreCase(kodeTransaksi)) {
                 TransaksiPeminjaman peminjaman = TransaksiPeminjaman.cariTransaksiPinjam(kodeTransaksi, pinjams);
-                System.out.println("Kelompok 4 Car Rental");
+                System.out.println("Kelompok 4 Rental");
                 System.out.println("---------------------");
                 System.out.println("Transaksi " + kodeTransaksi);
-                System.out.println("Sewa mobil " + peminjaman.getMobilPinjam().getNamaMobil() + " " + peminjaman.getMobilPinjam().getPlatTransportasi());
+
+                if (peminjaman.getMobilPinjam() != null) {
+                    System.out.println("Sewa mobil " + peminjaman.getMobilPinjam().getNamaTransport() + " " + peminjaman.getMobilPinjam().getPlatTransportasi());
+                } else if (peminjaman.getMotorPinjam() != null) {
+                    System.out.println("Sewa motor " + peminjaman.getMotorPinjam().getNamaTransport() + " " + peminjaman.getMotorPinjam().getPlatTransportasi());
+                }
                 System.out.println("---------------------");
                 // jika denda>deposit , bayar denda; jika deposit<denda, kasih balek deposit sisa
                 if (kembali.getDenda() > 0) {

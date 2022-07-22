@@ -1,9 +1,10 @@
 public abstract class Transaksi{
-
+    // atribut
     String nomorTransaksi;
     int biaya;
     int lamaSewa;
 
+    // constructor
     public Transaksi() {
     }
 
@@ -13,6 +14,7 @@ public abstract class Transaksi{
         this.lamaSewa = lamaSewa;
     }
 
+    // setter getter
     public String getNomorTransaksi() {
         return this.nomorTransaksi;
     }
@@ -36,8 +38,6 @@ public abstract class Transaksi{
     public void setLamaSewa(int lamaSewa) {
         this.lamaSewa = lamaSewa;
     }
-
-
 
     @Override
     public String toString() {

@@ -5,9 +5,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 public class util {
+    static Scanner input = new Scanner(System.in);
     public static String changeToDate (String tanggal) throws ParseException{
         Calendar cal = Calendar.getInstance();
             //string diubah ke date dan calender
@@ -37,7 +39,7 @@ public class util {
         return (int) TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
     }
 
-    public static void updateAll ( ArrayList <Mobil> mobils,ArrayList <TransaksiPeminjaman> pinjams, ArrayList <TransaksiPengembalian> kembalis, ArrayList <Pelanggan> pelanggans) throws FileNotFoundException, IOException, ParseException{
+    public static void updateAll ( ArrayList <Mobil> mobils,ArrayList <TransaksiPeminjaman> pinjams, ArrayList <TransaksiPengembalian> kembalis, ArrayList <Pelanggan> pelanggans, ArrayList<Motor> motors) throws FileNotFoundException, IOException, ParseException{
         mobils.removeAll(mobils);
         Mobil.updateMobil(mobils);
         pelanggans.removeAll(pelanggans);
@@ -46,10 +48,41 @@ public class util {
         TransaksiPeminjaman.updatePinjam(pinjams);
         kembalis.removeAll(kembalis);
         TransaksiPengembalian.updateKembali(kembalis);
+        motors.removeAll(motors);
+        Motor.updateMotor(motors);
     }
 
     public static void clearScreen(){
         System.out.print("\033[H\033[2J");
         System.out.flush();
+    }
+
+    public static String inputTanggal (String status) throws ParseException {
+        //input tanggal pinjam
+        System.out.println("Masukkan tanggal " + status.toLowerCase());
+        System.out.print("Tanggal (1-31) : ");
+        int day = input.nextInt();
+        System.out.print("Bulan (1-12): ");
+        int month = input.nextInt();
+        System.out.print("Tahun : ");
+        int year = input.nextInt();
+            //gabung jadi 1 string
+        String tanggal = Integer.toString(day) + "/" + Integer.toString(month) + "/" +Integer.toString(year);
+        tanggal = util.changeToDate(tanggal);
+        return tanggal;
+    }
+
+    public static int inputDurasi (String status) {
+        //input durasi pinjam
+        System.out.print("Masukkan durasi " + status.toLowerCase() + " anda : ");
+        int durasi = input.nextInt();
+        return durasi;
+    }
+
+    public static String inputLokasi (String status ){
+        //input lokasi pinjam
+        System.out.print("Masukkan lokasi " + status + " anda : ");
+        String lokasi = input.next();
+        return lokasi;
     }
 }
