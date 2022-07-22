@@ -14,7 +14,8 @@ import java.util.Scanner;
 // Merupakan inheritance dari Mobil
 public class Mobil extends Transportasi{
     // atribut
-    int JumlahPenumpang;
+    
+    private int JumlahPenumpang;
     private String jenisTransmisi;
 
     
@@ -22,14 +23,6 @@ public class Mobil extends Transportasi{
     
     // constructors
     public Mobil() {
-    }
-
-    public Mobil(String kodeMobil, String namaMobil, String jenisTransmisi,  int JumlahPenumpang,  int HargaSewa) {
-        this.kodeTransport = kodeMobil;
-        this.namaTransport = namaMobil;
-        this.jenisTransmisi = jenisTransmisi;
-        this.JumlahPenumpang = JumlahPenumpang;
-        this.HargaSewa = HargaSewa;
     }
 
     public Mobil(String kodeMobil, String namaMobil, String jenisTransmisi, String PlatTransportasi, int JumlahPenumpang, String StatusMobil, int HargaSewa) {

@@ -13,7 +13,6 @@ import java.util.Scanner;
 
 // Merupakan inheritance dari Mobil
 public class Motor extends Transportasi{
-    // atribut
 
     
     static Scanner input = new Scanner(System.in);
@@ -251,7 +250,7 @@ public class Motor extends Transportasi{
                     } 
                 }
                 //cek mobil from class mobil
-                int dendaCek = Mobil.cekTransport() * 50000;
+                int dendaCek = Motor.cekTransport() * 30000;
                 //hitung denda total
                 int totalDenda = dendaHari + dendaCek - pinjam.getDeposit();
 
@@ -300,6 +299,24 @@ public class Motor extends Transportasi{
                 System.out.println(motor);
             }
         }
+    }
+
+    public static int cekTransport (){
+        int total = 0;
+        int data[] = new int[4];
+        System.out.println("Cek Transport");
+        System.out.println("---------");
+        System.out.println("0 jika terpenuhi, 1 jika tidak");
+        System.out.print("Minyak di atas 50% : ");
+        data[0] = input.nextInt();
+        System.out.print("Mesin jalan lancar : ");
+        data[1] = input.nextInt()*2;
+        System.out.print("Bodi tidak tergores : ");
+        data[2] = input.nextInt()*2;
+        for (int i : data) {
+            total += i;
+        }
+        return total;
     }
 
     @Override

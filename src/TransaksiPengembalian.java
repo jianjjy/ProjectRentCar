@@ -25,13 +25,6 @@ public class TransaksiPengembalian extends Transaksi{
         this.tanggalKembali = tanggalKembali;
     }
 
-
-    public TransaksiPengembalian(String lokasiKembali, String tanggalKembali, int denda) {
-        this.denda = denda;
-        this.lokasiKembali = lokasiKembali;
-        this.tanggalKembali = tanggalKembali;
-    }
-
     // getter setter
     public int getDenda() {
         return this.denda;
