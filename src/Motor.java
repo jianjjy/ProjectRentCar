@@ -134,13 +134,13 @@ public class Motor extends Transportasi{
                 String plat3 = input.next();
                 String plat = plat1 + " " + plat2 + " " + plat3;
 
-                String kodeMobil = "N0" + Integer.toString(motors.size()+1);
+                String kodeMotor = "N0" + Integer.toString(motors.size()+1);
 
                 //masukkan data pelanggan ke ArrayList
-                motors.add(new Motor(kodeMobil, namaMobil, plat, "Tersedia", harga));
+                motors.add(new Motor(kodeMotor, namaMobil, plat, "Tersedia", harga));
                 //masukkan data pelanggan ke file
                 try (FileWriter pwMobil = new FileWriter("data/motor.txt", true)) {
-                    pwMobil.append("\n" + kodeMobil + "," + namaMobil + ","  + plat + ","  +  "Tersedia" + "," + harga);
+                    pwMobil.append("\n" + kodeMotor + "," + namaMobil + ","  + plat + ","  +  "Tersedia" + "," + harga);
                 }
     }
 
