@@ -18,6 +18,7 @@ public class App  {
                 util.clearScreen();
                 System.out.println("Sewa Kendaraan");
                 int pilihan2 = CetakSubMenu();
+                util.clearScreen();
                 if (pilihan2 == 1) {
                     Mobil.SewaMobil(mobils, pinjams, pelanggans);
                 } else if (pilihan2 == 2){
@@ -28,6 +29,7 @@ public class App  {
                 util.clearScreen();
                 System.out.println("Kembali Kendaraan");
                 int pilihan2 = CetakSubMenu();
+                util.clearScreen();
                 if (pilihan2 == 1) {
                     Mobil.kembaliMobil(mobils, pinjams, pelanggans, kembalis);
                 } else if (pilihan2 == 2){
@@ -38,6 +40,7 @@ public class App  {
                 util.clearScreen();
                 System.out.println("Cetak Kendaraan Tersedia");
                 int pilihan2 = CetakSubMenu();
+                util.clearScreen();
                 if (pilihan2 == 1) {
                     Mobil.displayAturanMobil("Tersedia");
                 } else if (pilihan2 == 2){
@@ -48,6 +51,7 @@ public class App  {
                 util.clearScreen();
                 System.out.println("Transaksi Berlangsung");
                 int pilihan2 = CetakSubMenu();
+                util.clearScreen();
                 if (pilihan2 == 1) {
                     TransaksiPeminjaman.displayAturanPinjam("Meminjam", "m");
                 } else if (pilihan2 == 2){
@@ -58,6 +62,7 @@ public class App  {
                 util.clearScreen();
                 System.out.println("Daftar Kendaraan Baru");
                 int pilihan2 = CetakSubMenu();
+                util.clearScreen();
                 if (pilihan2 == 1) {
                     Mobil.DaftarMobil(mobils);
                 } else if (pilihan2 == 2){
@@ -73,6 +78,10 @@ public class App  {
         } while (yn.equalsIgnoreCase("y"));
     }
 
+    /* Nama                 : Jian Jeraus Young
+     * NIM                  : 03081210009
+     * Deskripsi Singkat    : CetakMenu () berfungsi untuk mencetak menu utama, seperti menyewa kendaraan, mengembalikkan dan lainnya.
+     */
     public static int CetakMenu () {
         System.out.println("Menu Rental Kendaraan");
         System.out.println("-----------------");
@@ -87,6 +96,11 @@ public class App  {
         return pilihan;
     }
 
+    /* Nama                 : Jian Jeraus Young
+     * NIM                  : 03081210009
+     * Deskripsi Singkat    : CetakSubMenu () berfungsi untuk mencetak submenu, yaitu, jika dalam menu dipilih menyewa kendaraan
+     *                        maka di sub menu diberi pilihan antara 2 kendaraan yang tersedia
+     */
     public static int CetakSubMenu () {
         System.out.println("Tentukan Kendaraan");
         System.out.println("-----------------");

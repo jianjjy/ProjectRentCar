@@ -1,3 +1,5 @@
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 public abstract class Transportasi{
@@ -61,6 +63,10 @@ public abstract class Transportasi{
         this.HargaSewa = HargaSewa;
     }
 
+    /* Nama                 : Jian Jeraus Young
+     * NIM                  : 03081210009
+     * Deskripsi Singkat    : berfungsi untuk mengecek kondisi transpor
+     */
     public static int cekTransport (){
         int total = 0;
         int data[] = new int[4];
@@ -81,4 +87,6 @@ public abstract class Transportasi{
         }
         return total;
     }
+
+    public static void displayTransportAsc (String equals)  throws FileNotFoundException, IOException{}
 }

@@ -124,23 +124,10 @@ public class TransaksiPeminjaman extends Transaksi{
     }
 
 
-
-    @Override
-    public String toString() {
-        return "{" +
-            " mobils='" + "'" +
-            ", pelanggans='"  + "'" +
-            ", deposit='" + getDeposit() + "'" +
-            ", lokasiPinjam='" + getLokasiPinjam() + "'" +
-            ", tanggalPinjam='" + getTanggalPinjam() + "'" +
-            ", mobilPinjam='"  + "'" +
-            ", pelangganPinjam='" + "'" +
-            ", nomorTransaksi='" + getNomorTransaksi() + "'" +
-            ", biaya='" + getBiaya() + "'" +
-            ", lamaSewa='" + getLamaSewa() + "'" +
-            "}";
-    }
-    
+    /* Nama                 : Jian Jeraus Young
+     * NIM                  : 03081210009
+     * Deskripsi Singkat    : berfungsi untuk membalikkan arraylist dari text file
+     */
     public static ArrayList<TransaksiPeminjaman> updatePinjam (ArrayList<TransaksiPeminjaman> pinjams) throws FileNotFoundException, IOException, ParseException {
         try (BufferedReader read = new BufferedReader(new FileReader("data/peminjaman.txt"))) {
             String s = "";
@@ -152,7 +139,12 @@ public class TransaksiPeminjaman extends Transaksi{
         return pinjams;
     }
 
-    public static void updatePinjam (String kodeTransaksi, String status) throws IOException{
+    /* Nama                 : Jian Jeraus Young
+     * NIM                  : 03081210009
+     * Deskripsi Singkat    : berfungsi untuk mengupdate textfile dan arraylist jika ada 1 data yang perlu diganti
+     *                        OverLoading dengan method diatas karena mempunyai nama yang sama dengan parameter berbeda
+     */
+    public static void updatePinjam (String kodeTransaksi, String status, ArrayList<TransaksiPeminjaman> pinjams) throws IOException, ParseException{
         String FilePath = "data/peminjaman.txt";
         File oldFile = new File ("data/peminjaman.txt");
         File newFile = new File ("data/temp.txt");
@@ -193,8 +185,14 @@ public class TransaksiPeminjaman extends Transaksi{
             File dump = new File(FilePath);
             newFile.renameTo(dump);
         }
+        pinjams.removeAll(pinjams);
+        TransaksiPeminjaman.updatePinjam(pinjams);
     }
 
+    /* Nama                 : Jian Jeraus Young
+     * NIM                  : 03081210009
+     * Deskripsi Singkat    : berfungsi untuk mencetak bon transaksi peminjaman dari kode Transaksi
+     */
     public static void cetakRecieptPinjam (String kodeTransaksi, ArrayList<TransaksiPeminjaman> pinjams) throws ParseException {
         for (TransaksiPeminjaman pinjam : pinjams) {
             if (pinjam.getNomorTransaksi().equalsIgnoreCase(kodeTransaksi)) {
@@ -219,6 +217,10 @@ public class TransaksiPeminjaman extends Transaksi{
         }
     }
 
+    /* Nama                 : Jian Jeraus Young
+     * NIM                  : 03081210009
+     * Deskripsi Singkat    : berfungsi untuk mengembalikan satu transaksi peminjaman dari sebuah kode transaksi
+     */
     public static TransaksiPeminjaman cariTransaksiPinjam (String kode, ArrayList<TransaksiPeminjaman> pinjams){
         int i = 0;
         for (TransaksiPeminjaman pinjam : pinjams) {
@@ -230,6 +232,10 @@ public class TransaksiPeminjaman extends Transaksi{
         return pinjams.get(i);
     }
 
+    /* Nama                 : Jian Jeraus Young
+     * NIM                  : 03081210009
+     * Deskripsi Singkat    : berfungsi untukmenampilkan info mengenai transaksi peminjaman hanya dengan kondisi tertentu
+     */
     public static void displayAturanPinjam (String equals1, String kode) throws FileNotFoundException, IOException{
         try (BufferedReader read = new BufferedReader(new FileReader("data/peminjaman.txt"))) {
             String s = "";

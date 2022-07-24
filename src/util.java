@@ -10,6 +10,11 @@ import java.util.concurrent.TimeUnit;
 
 public class util {
     static Scanner input = new Scanner(System.in);
+
+    /* Nama                 : Jian Jeraus Young
+     * NIM                  : 03081210009
+     * Deskripsi Singkat    : berfungsi untuk mengganti tanggal yang salah menjadi benar
+     */
     public static String changeToDate (String tanggal) throws ParseException{
         Calendar cal = Calendar.getInstance();
             //string diubah ke date dan calender
@@ -20,6 +25,10 @@ public class util {
         return tanggal;
     }
 
+    /* Nama                 : Jian Jeraus Young
+     * NIM                  : 03081210009
+     * Deskripsi Singkat    : berfungsi untuk menambah tanggal dengan durasi (dalam hari)
+     */
     public static String addToDate (String tanggal, int durasi) throws ParseException{
         Calendar cal = Calendar.getInstance();
             //string diubah ke date dan calender
@@ -32,6 +41,10 @@ public class util {
         return tanggal;
     }
 
+    /* Nama                 : Jian Jeraus Young
+     * NIM                  : 03081210009
+     * Deskripsi Singkat    : berfungsi untuk mengembalikan perbedaan 2 tanggal (dalam hari)
+     */
     public static int getDifferenceDays(String date1, String date2) throws ParseException {
         Date d1 = new SimpleDateFormat("dd/MM/yyyy").parse(date1);
         Date d2 = new SimpleDateFormat("dd/MM/yyyy").parse(date2);
@@ -39,6 +52,10 @@ public class util {
         return (int) TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
     }
 
+    /* Nama                 : Jian Jeraus Young
+     * NIM                  : 03081210009
+     * Deskripsi Singkat    : berfungsi untuk mengupdate arraylist dari file
+     */
     public static void updateAll ( ArrayList <Mobil> mobils,ArrayList <TransaksiPeminjaman> pinjams, ArrayList <TransaksiPengembalian> kembalis, ArrayList <Pelanggan> pelanggans, ArrayList<Motor> motors) throws FileNotFoundException, IOException, ParseException{
         mobils.removeAll(mobils);
         Mobil.updateMobil(mobils);
@@ -52,11 +69,19 @@ public class util {
         Motor.updateMotor(motors);
     }
 
+    /* Nama                 : Jian Jeraus Young
+     * NIM                  : 03081210009
+     * Deskripsi Singkat    : berfungsi untuk membershkan layar terminal
+     */
     public static void clearScreen(){
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
 
+    /* Nama                 : Jian Jeraus Young
+     * NIM                  : 03081210009
+     * Deskripsi Singkat    : berfungsi untuk mengembalikan inputan tanggal dari user
+     */
     public static String inputTanggal (String status) throws ParseException {
         //input tanggal pinjam
         System.out.println("Masukkan tanggal " + status.toLowerCase());
@@ -72,6 +97,10 @@ public class util {
         return tanggal;
     }
 
+    /* Nama                 : Jian Jeraus Young
+     * NIM                  : 03081210009
+     * Deskripsi Singkat    : berfungsi untuk mengembalikan inputan durasi dari user
+     */
     public static int inputDurasi (String status) {
         //input durasi pinjam
         System.out.print("Masukkan durasi " + status.toLowerCase() + " anda : ");
@@ -79,6 +108,10 @@ public class util {
         return durasi;
     }
 
+    /* Nama                 : Jian Jeraus Young
+     * NIM                  : 03081210009
+     * Deskripsi Singkat    : berfungsi untuk mengembalikan inputan lokasi dari user
+     */
     public static String inputLokasi (String status ){
         //input lokasi pinjam
         System.out.print("Masukkan lokasi " + status + " anda : ");

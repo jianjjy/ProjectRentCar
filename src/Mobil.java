@@ -6,7 +6,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -14,7 +13,6 @@ import java.util.Scanner;
 // Merupakan inheritance dari Mobil
 public class Mobil extends Transportasi{
     // atribut
-    
     private int JumlahPenumpang;
     private String jenisTransmisi;
 
@@ -52,6 +50,10 @@ public class Mobil extends Transportasi{
         this.jenisTransmisi = jenisTransmisi;
     }
 
+    /* Nama                 : Jian Jeraus Young
+     * NIM                  : 03081210009
+     * Deskripsi Singkat    : berfungsi untuk membalikkan arraylist dari text file
+     */
     public static ArrayList<Mobil> updateMobil (ArrayList<Mobil> mobil) throws FileNotFoundException, IOException {
         try (BufferedReader read = new BufferedReader(new FileReader("data/mobil.txt"))) {
             String s = "";
@@ -63,7 +65,12 @@ public class Mobil extends Transportasi{
         return mobil;
     }
 
-    public static void updateMobil (String kodeMobil, String status) throws IOException{
+    /* Nama                 : Jian Jeraus Young
+     * NIM                  : 03081210009
+     * Deskripsi Singkat    : berfungsi untuk mengupdate textfile dan arraylist jika ada 1 data yang perlu diganti
+     *                        OverLoading dengan method diatas karena mempunyai nama yang sama dengan parameter berbeda
+     */
+    public static void updateMobil (String kodeMobil, String status, ArrayList<Mobil> mobils) throws IOException{
         String FilePath = "data/mobil.txt";
         File oldFile = new File ("data/mobil.txt");
         File newFile = new File ("data/temp.txt");
@@ -104,8 +111,14 @@ public class Mobil extends Transportasi{
             File dump = new File(FilePath);
             newFile.renameTo(dump);
         }
+        mobils.removeAll(mobils);
+        Mobil.updateMobil(mobils);
     }
 
+    /* Nama                 : Jian Jeraus Young
+     * NIM                  : 03081210009
+     * Deskripsi Singkat    : berfungsi untuk menampilkan info mengenai mobil hanya dengan kondisi tertentu
+     */
     public static void displayAturanMobil (String equals) throws FileNotFoundException, IOException{
         try (BufferedReader read = new BufferedReader(new FileReader("data/mobil.txt"))) {
             String s = "";
@@ -130,6 +143,10 @@ public class Mobil extends Transportasi{
         }
     }
 
+    /* Nama                 : Jian Jeraus Young
+     * NIM                  : 03081210009
+     * Deskripsi Singkat    : berfungsi untuk mendaftar sebuah mobil, lalu diinput ke textfile dan arraylist
+     */
     public static void DaftarMobil (ArrayList<Mobil> mobils) throws Exception {
         System.out.println("Daftar Mobil Baru");
                 System.out.println("-----------------");
@@ -168,6 +185,10 @@ public class Mobil extends Transportasi{
                 }
     }
 
+    /* Nama                 : Jian Jeraus Young
+     * NIM                  : 03081210009
+     * Deskripsi Singkat    : berfungsi untuk menyewa sebuah mobil, lalu diupdate status mobil serta menambah transaksi pinjam dan pelanggan
+     */
     public static void SewaMobil (ArrayList<Mobil> mobils, ArrayList<TransaksiPeminjaman> pinjams, ArrayList<Pelanggan> pelanggans) throws Exception {
         
         String tanggalPinjam = util.inputTanggal("peminjaman");
@@ -230,18 +251,22 @@ public class Mobil extends Transportasi{
                     try (FileWriter pwPinjam = new FileWriter("data/peminjaman.txt", true)) {
                         pwPinjam.append( "\n" +kodePinjam + "," + kodeInput + "," + kodePelanggan + "," + lokasiPinjam + "," + tanggalPinjam + "," + deposit + "," + hargaTotal + "," + durasi + ",Meminjam");
                     }
-                    Mobil.updateMobil(kodeInput, "Dipinjam");
+                    Mobil.updateMobil(kodeInput, "Dipinjam", mobils);
 
                     //cetak reciept
                     util.clearScreen();
                     TransaksiPeminjaman.cetakRecieptPinjam(kodePinjam,pinjams);
                 }
                 break;
-            }
+            } else throw new Exception("Mobil tidak tersedia");
         }
     }
 
-    public static void kembaliMobil (ArrayList<Mobil> mobils, ArrayList<TransaksiPeminjaman> pinjams, ArrayList<Pelanggan> pelanggans, ArrayList<TransaksiPengembalian> kembalis) throws FileNotFoundException, IOException, ParseException{
+    /* Nama                 : Jian Jeraus Young
+     * NIM                  : 03081210009
+     * Deskripsi Singkat    : berfungsi untuk mengembalikan sebuah mobil, lalu diupdate status mobil, transaksi pinjam dan pelanggan serta menambah transaksi kembali
+     */
+    public static void kembaliMobil (ArrayList<Mobil> mobils, ArrayList<TransaksiPeminjaman> pinjams, ArrayList<Pelanggan> pelanggans, ArrayList<TransaksiPengembalian> kembalis) throws Exception{
         TransaksiPeminjaman.displayAturanPinjam ("Meminjam", "m");
         //masukkan nomor peminjaman yang mau dikembalikan
         System.out.print("Masukkan kode transaksi : ");
@@ -279,9 +304,9 @@ public class Mobil extends Transportasi{
                 int totalDenda = dendaHari + dendaCek - pinjam.getDeposit();
 
                 TransaksiPeminjaman peminjaman = TransaksiPeminjaman.cariTransaksiPinjam(kodeInput, pinjams);
-                Pelanggan.updatePelanggan(peminjaman.getPelangganPinjam().getKodePelanggan(), "lunas");
-                Mobil.updateMobil(peminjaman.getMobilPinjam().getKodeTransport(), "Tersedia");
-                TransaksiPeminjaman.updatePinjam(kodeInput, "Berhasil");
+                Pelanggan.updatePelanggan(peminjaman.getPelangganPinjam().getKodePelanggan(), "lunas", pelanggans);
+                Mobil.updateMobil(peminjaman.getMobilPinjam().getKodeTransport(), "Tersedia", mobils);
+                TransaksiPeminjaman.updatePinjam(kodeInput, "Berhasil", pinjams);
 
                 //masukkan data kembali ke ArrayList
                 kembalis.add(new TransaksiPengembalian(kodeInput, lokasiKembali, tanggalKembali, totalDenda));
@@ -292,11 +317,16 @@ public class Mobil extends Transportasi{
                 util.clearScreen();
                 TransaksiPengembalian.cetakRecieptKembali(kodeInput, kembalis, pinjams);
                 break;
-            }
+            } else throw new Exception("Kode Transaksi Salah");
         }
     }
 
-    public static void displayAturanMobilAsc (String equals) throws FileNotFoundException, IOException{
+    /* Nama                 : Jian Jeraus Young
+     * NIM                  : 03081210009
+     * Deskripsi Singkat    : berfungsi untuk menampilkan mobil berdasarkan harga tertinggi
+     *                        OverRide method dari class Transportasi
+     */
+    public static void displayTransportAsc (String equals) throws FileNotFoundException, IOException{
         try (BufferedReader read = new BufferedReader(new FileReader("data/mobil.txt"))) {
             String s = "";
             ArrayList <Mobil> asc = new ArrayList<>();

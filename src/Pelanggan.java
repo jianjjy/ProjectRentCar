@@ -83,17 +83,10 @@ public class Pelanggan {
         this.statusPelanggan = statusPelanggan;
     }
 
-
-    @Override
-    public String toString() {
-        return "{" +
-            " namaPelanggan='" + getNamaPelanggan() + "'" +
-            ", noTelpPelanggan='" + getNoTelpPelanggan() + "'" +
-            ", umurPelanggan='" + getUmurPelanggan() + "'" +
-            ", emailPelanggan='" + getEmailPelanggan() + "'" +
-            "}";
-    }
-
+    /* Nama                 : Jian Jeraus Young
+     * NIM                  : 03081210009
+     * Deskripsi Singkat    : berfungsi untuk membalikkan arraylist dari text file
+     */
     public static ArrayList<Pelanggan> updatePelanggan (ArrayList<Pelanggan> pelanggans) throws FileNotFoundException, IOException {
         try (BufferedReader read = new BufferedReader(new FileReader("data/pelanggan.txt"))) {
             String s = "";
@@ -105,7 +98,12 @@ public class Pelanggan {
         return pelanggans;
     }
 
-    public static void updatePelanggan (String kodePelanggan, String status) throws IOException{
+    /* Nama                 : Jian Jeraus Young
+     * NIM                  : 03081210009
+     * Deskripsi Singkat    : berfungsi untuk mengupdate textfile dan arraylist jika ada 1 data yang perlu diganti
+     *                        OverLoading dengan method diatas karena mempunyai nama yang sama dengan parameter berbeda
+     */
+    public static void updatePelanggan (String kodePelanggan, String status, ArrayList<Pelanggan> pelanggans) throws IOException{
         String FilePath = "data/pelanggan.txt";
         File oldFile = new File ("data/pelanggan.txt");
         File newFile = new File ("data/temp.txt");
@@ -146,6 +144,8 @@ public class Pelanggan {
             File dump = new File(FilePath);
             newFile.renameTo(dump);
         }
+        pelanggans.removeAll(pelanggans);
+        Pelanggan.updatePelanggan(pelanggans);
     }
 
 }

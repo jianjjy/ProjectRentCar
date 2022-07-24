@@ -6,7 +6,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -45,6 +44,10 @@ public class Motor extends Transportasi{
         this.HargaSewa = HargaSewa;
     }
 
+    /* Nama                 : Jian Jeraus Young
+     * NIM                  : 03081210009
+     * Deskripsi Singkat    : berfungsi untuk membalikkan arraylist dari text file
+     */
     public static ArrayList<Motor> updateMotor (ArrayList<Motor> motors) throws FileNotFoundException, IOException {
         try (BufferedReader read = new BufferedReader(new FileReader("data/motor.txt"))) {
             String s = "";
@@ -56,7 +59,12 @@ public class Motor extends Transportasi{
         return motors;
     }
 
-    public static void updateMotor (String kodeMotor, String status) throws IOException{
+     /* Nama                 : Jian Jeraus Young
+     * NIM                  : 03081210009
+     * Deskripsi Singkat    : berfungsi untuk mengupdate textfile dan arraylist jika ada 1 data yang perlu diganti
+     *                        OverLoading dengan method diatas karena mempunyai nama yang sama dengan parameter berbeda
+     */
+    public static void updateMotor (String kodeMotor, String status, ArrayList<Motor> motors) throws IOException{
         String FilePath = "data/motor.txt";
         File oldFile = new File ("data/motor.txt");
         File newFile = new File ("data/temp.txt");
@@ -97,8 +105,14 @@ public class Motor extends Transportasi{
             File dump = new File(FilePath);
             newFile.renameTo(dump);
         }
+        motors.removeAll(motors);
+        Motor.updateMotor(motors);
     }
 
+    /* Nama                 : Jian Jeraus Young
+     * NIM                  : 03081210009
+     * Deskripsi Singkat    : berfungsi untuk menampilkan info mengenai motor hanya dengan kondisi tertentu
+     */
     public static void displayAturanMotor (String equals) throws FileNotFoundException, IOException{
         try (BufferedReader read = new BufferedReader(new FileReader("data/motor.txt"))) {
             String s = "";
@@ -121,6 +135,10 @@ public class Motor extends Transportasi{
         }
     }
 
+    /* Nama                 : Jian Jeraus Young
+     * NIM                  : 03081210009
+     * Deskripsi Singkat    : berfungsi untuk mendaftar sebuah motor, lalu diinput ke textfile dan arraylist
+     */
     public static void DaftarMotor (ArrayList<Motor> motors) throws Exception {
         System.out.println("Daftar Motor Baru");
                 System.out.println("-----------------");
@@ -144,6 +162,10 @@ public class Motor extends Transportasi{
                 }
     }
 
+    /* Nama                 : Jian Jeraus Young
+     * NIM                  : 03081210009
+     * Deskripsi Singkat    : berfungsi untuk menyewa sebuah motor, lalu diupdate status motor serta menambah transaksi pinjam dan pelanggan
+     */
     public static void SewaMotor (ArrayList<Motor> motors, ArrayList<TransaksiPeminjaman> pinjams, ArrayList<Pelanggan> pelanggans) throws Exception {
         
         String tanggalPinjam = util.inputTanggal("peminjaman");
@@ -206,18 +228,22 @@ public class Motor extends Transportasi{
                     try (FileWriter pwPinjam = new FileWriter("data/peminjaman.txt", true)) {
                         pwPinjam.append( "\n" +kodePinjam + "," + kodeInput + "," + kodePelanggan + "," + lokasiPinjam + "," + tanggalPinjam + "," + deposit + "," + hargaTotal + "," + durasi + ",Meminjam");
                     }
-                    Mobil.updateMobil(kodeInput, "Dipinjam");
+                    Motor.updateMotor(kodeInput, "Dipinjam", motors);
 
                     //cetak reciept
                     util.clearScreen();
                     TransaksiPeminjaman.cetakRecieptPinjam(kodePinjam,pinjams);
                 }
                 break;
-            }
+            } else throw new Exception("Motor tidak tersedia");
         }
     }
 
-    public static void kembaliMotor (ArrayList<Motor> motors, ArrayList<TransaksiPeminjaman> pinjams, ArrayList<Pelanggan> pelanggans, ArrayList<TransaksiPengembalian> kembalis) throws FileNotFoundException, IOException, ParseException{
+    /* Nama                 : Jian Jeraus Young
+     * NIM                  : 03081210009
+     * Deskripsi Singkat    : berfungsi untuk mengembalikan sebuah motor, lalu diupdate status mobil, transaksi pinjam dan pelanggan serta menambah transaksi kembali
+     */
+    public static void kembaliMotor (ArrayList<Motor> motors, ArrayList<TransaksiPeminjaman> pinjams, ArrayList<Pelanggan> pelanggans, ArrayList<TransaksiPengembalian> kembalis) throws Exception{
         TransaksiPeminjaman.displayAturanPinjam ("Meminjam", "n");
         //masukkan nomor peminjaman yang mau dikembalikan
         System.out.print("Masukkan kode transaksi : ");
@@ -255,9 +281,9 @@ public class Motor extends Transportasi{
                 int totalDenda = dendaHari + dendaCek - pinjam.getDeposit();
 
                 TransaksiPeminjaman peminjaman = TransaksiPeminjaman.cariTransaksiPinjam(kodeInput, pinjams);
-                Pelanggan.updatePelanggan(peminjaman.getPelangganPinjam().getKodePelanggan(), "lunas");
-                Motor.updateMotor(peminjaman.getMotorPinjam().getKodeTransport(), "Tersedia");
-                TransaksiPeminjaman.updatePinjam(kodeInput, "Berhasil");
+                Pelanggan.updatePelanggan(peminjaman.getPelangganPinjam().getKodePelanggan(), "lunas", pelanggans);
+                Motor.updateMotor(peminjaman.getMotorPinjam().getKodeTransport(), "Tersedia", motors);
+                TransaksiPeminjaman.updatePinjam(kodeInput, "Berhasil", pinjams);
 
                 //masukkan data kembali ke ArrayList
                 kembalis.add(new TransaksiPengembalian(kodeInput, lokasiKembali, tanggalKembali, totalDenda));
@@ -268,11 +294,16 @@ public class Motor extends Transportasi{
                 util.clearScreen();
                 TransaksiPengembalian.cetakRecieptKembali(kodeInput, kembalis, pinjams);
                 break;
-            }
+            } else throw new Exception("Kode Transaksi Salah");
         }
     }
 
-    public static void displayAturanMotorAsc (String equals) throws FileNotFoundException, IOException{
+    /* Nama                 : Jian Jeraus Young
+     * NIM                  : 03081210009
+     * Deskripsi Singkat    : berfungsi untuk menampilkan motor berdasarkan harga tertinggi
+     *                        OverRide method dari class Transportasi
+     */
+    public static void displayTransportAsc (String equals) throws FileNotFoundException, IOException{
         try (BufferedReader read = new BufferedReader(new FileReader("data/motor.txt"))) {
             String s = "";
             ArrayList <Motor> asc = new ArrayList<>();
@@ -301,6 +332,11 @@ public class Motor extends Transportasi{
         }
     }
 
+    /* Nama                 : Jian Jeraus Young
+     * NIM                  : 03081210009
+     * Deskripsi Singkat    : berfungsi untuk mengecek kondisi motor
+     *                        OverRide method dari class Transportasi
+     */
     public static int cekTransport (){
         int total = 0;
         int data[] = new int[4];

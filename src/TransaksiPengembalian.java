@@ -58,15 +58,11 @@ public class TransaksiPengembalian extends Transaksi{
         this.nomorTransaksi = nomorTransaksi;
     }
 
-    @Override
-    public String toString() {
-        return "{" +
-            " denda='" + getDenda() + "'" +
-            ", lokasiKembali='" + getLokasiKembali() + "'" +
-            ", tanggalKembali='" + getTanggalKembali() + "'" +
-            "}";
-    }
 
+    /* Nama                 : Jian Jeraus Young
+     * NIM                  : 03081210009
+     * Deskripsi Singkat    : berfungsi untuk membalikkan arraylist dari text file
+     */
     public static ArrayList<TransaksiPengembalian> updateKembali (ArrayList<TransaksiPengembalian> kembalis) throws FileNotFoundException, IOException, ParseException {
         try (BufferedReader read = new BufferedReader(new FileReader("data/pengembalian.txt"))) {
             String s = "";
@@ -78,6 +74,10 @@ public class TransaksiPengembalian extends Transaksi{
         return kembalis;
     }
 
+    /* Nama                 : Jian Jeraus Young
+     * NIM                  : 03081210009
+     * Deskripsi Singkat    : berfungsi untuk mencetak bon transaksi pengembalian dari kode Transaksi
+     */
     public static void cetakRecieptKembali (String kodeTransaksi, ArrayList<TransaksiPengembalian> kembalis,  ArrayList<TransaksiPeminjaman> pinjams) {
         for (TransaksiPengembalian kembali : kembalis) {
             if (kembali.getNomorTransaksi().equalsIgnoreCase(kodeTransaksi)) {

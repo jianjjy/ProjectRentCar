@@ -38,14 +38,4 @@ public abstract class Transaksi{
     public void setLamaSewa(int lamaSewa) {
         this.lamaSewa = lamaSewa;
     }
-
-    @Override
-    public String toString() {
-        return "{" +
-            " nomorTransaksi='" + getNomorTransaksi() + "'" +
-            ", biaya='" + getBiaya() + "'" +
-            ", lamaSewa='" + getLamaSewa() + "'" +
-            "}";
-    }
-
 }
