@@ -42,9 +42,9 @@ public class App  {
                 int pilihan2 = CetakSubMenu();
                 util.clearScreen();
                 if (pilihan2 == 1) {
-                    Mobil.displayAturanMobil("Tersedia");
+                    Mobil.displayTransportAsc("Tersedia");
                 } else if (pilihan2 == 2){
-                    Motor.displayAturanMotor("Tersedia");
+                    Motor.displayTransportAsc("Tersedia");
                 } else throw new Exception("Harus masukkan nilai \"1\" sampai \"2\"");
 
             } else if (pilihan == 4) {

@@ -300,7 +300,7 @@ public class Motor extends Transportasi{
 
     /* Nama                 : Jian Jeraus Young
      * NIM                  : 03081210009
-     * Deskripsi Singkat    : berfungsi untuk menampilkan motor berdasarkan harga tertinggi
+     * Deskripsi Singkat    : berfungsi untuk menampilkan motor berdasarkan harga tertinggi menggunakan bubble sort
      *                        OverRide method dari class Transportasi
      */
     public static void displayTransportAsc (String equals) throws FileNotFoundException, IOException{
